@@ -9,9 +9,9 @@ const upload = require("../middleware/upload");
 router.get("/", ctrl.getAll);
 router.get("/:id", ctrl.getById);
 
-// Admin only – use upload.single('gambar') for image handling
-router.post("/", auth, adminMw, upload.single("gambar"), ctrl.create);
-router.put("/:id", auth, adminMw, upload.single("gambar"), ctrl.update);
+// Admin only – gambar is a URL string in JSON body
+router.post("/", auth, adminMw, ctrl.create);
+router.put("/:id", auth, adminMw, ctrl.update);
 router.delete("/:id", auth, adminMw, ctrl.remove);
 
 module.exports = router;

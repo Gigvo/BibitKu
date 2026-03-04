@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document
     .getElementById("product-form")
     .addEventListener("submit", saveProduct);
-  document.getElementById("img-file").addEventListener("change", previewImage);
+  document.getElementById("img-url").addEventListener("input", previewImage);
 });
 
 async function loadProducts() {
@@ -78,9 +78,14 @@ async function editProduct(id) {
     document.getElementById("f-harga").value = p.harga;
     document.getElementById("f-stok").value = p.stok;
     document.getElementById("f-desc").value = p.deskripsi || "";
+    document.getElementById("img-url").value = p.gambar || "";
     const prev = document.getElementById("img-preview");
-    prev.src = productImgSrc(p.gambar);
-    prev.style.display = "block";
+    if (p.gambar) {
+      prev.src = p.gambar;
+      prev.style.display = "block";
+    } else {
+      prev.style.display = "none";
+    }
     showModal("Edit Produk");
   } catch (e) {
     showToast("Gagal memuat data produk", "error");
@@ -88,11 +93,14 @@ async function editProduct(id) {
 }
 
 function previewImage(e) {
-  const file = e.target.files[0];
-  if (!file) return;
+  const url = e.target.value.trim();
   const prev = document.getElementById("img-preview");
-  prev.src = URL.createObjectURL(file);
-  prev.style.display = "block";
+  if (url) {
+    prev.src = url;
+    prev.style.display = "block";
+  } else {
+    prev.style.display = "none";
+  }
 }
 
 async function saveProduct(e) {
@@ -101,21 +109,21 @@ async function saveProduct(e) {
   btn.disabled = true;
   btn.textContent = "Menyimpan...";
 
-  const fd = new FormData();
-  fd.append("nama_tanaman", document.getElementById("f-nama").value.trim());
-  fd.append("jenis", document.getElementById("f-jenis").value);
-  fd.append("harga", document.getElementById("f-harga").value);
-  fd.append("stok", document.getElementById("f-stok").value);
-  fd.append("deskripsi", document.getElementById("f-desc").value.trim());
-  const imgFile = document.getElementById("img-file").files[0];
-  if (imgFile) fd.append("gambar", imgFile);
+  const body = {
+    nama_tanaman: document.getElementById("f-nama").value.trim(),
+    jenis: document.getElementById("f-jenis").value,
+    harga: document.getElementById("f-harga").value,
+    stok: document.getElementById("f-stok").value,
+    deskripsi: document.getElementById("f-desc").value.trim(),
+    gambar: document.getElementById("img-url").value.trim() || null,
+  };
 
   try {
     if (editingId) {
-      await apiForm("PUT", "/products/" + editingId, fd);
+      await apiPut("/products/" + editingId, body);
       showToast("Produk berhasil diperbarui");
     } else {
-      await apiForm("POST", "/products", fd);
+      await apiPost("/products", body);
       showToast("Produk berhasil ditambahkan");
     }
     closeModal();
