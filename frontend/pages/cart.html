@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Keranjang – GreenSeed</title>
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <a href="/index.html" class="navbar-brand"
+        ><span class="logo">🌱</span> GreenSeed</a
+      >
+      <div class="navbar-center">
+        <a href="catalog.html" class="nav-link">🛍️ Katalog</a>
+      </div>
+      <div class="navbar-right" id="nav-right"></div>
+    </nav>
+    <main class="page-wrap">
+      <h1 class="section-title">🛒 Keranjang Belanja</h1>
+
+      <!-- Empty state -->
+      <div
+        id="cart-empty"
+        style="display: none; text-align: center; padding: 3rem"
+      >
+        <div style="font-size: 4rem; margin-bottom: 1rem">🛒</div>
+        <h3>Keranjang masih kosong</h3>
+        <p class="text-muted">Yuk tambahkan produk ke keranjang!</p>
+        <a href="catalog.html" class="btn btn-success mt-2">🛍️ Mulai Belanja</a>
+      </div>
+
+      <!-- Cart layout -->
+      <div id="cart-wrap" class="cart-layout">
+        <!-- Items -->
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <h3 style="margin: 0">Item Keranjang</h3>
+            </div>
+            <div class="card-body">
+              <div id="cart-body"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Summary -->
+        <div>
+          <div class="card order-summary">
+            <div class="card-header">
+              <h3 style="margin: 0">Ringkasan Pesanan</h3>
+            </div>
+            <div class="card-body">
+              <div class="summary-row">
+                <span>Total item</span>
+                <span id="summary-count">–</span>
+              </div>
+              <div class="summary-row total">
+                <span>Total Pembayaran</span>
+                <span id="summary-total">–</span>
+              </div>
+              <button
+                id="checkout-btn"
+                class="btn btn-success w-full mt-2"
+                onclick="checkout()"
+              >
+                🛒 Checkout &amp; Bayar
+              </button>
+              <a href="catalog.html" class="btn btn-outline w-full mt-1"
+                >← Lanjut Belanja</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <div id="toasts"></div>
+    <script src="../js/api.js"></script>
+    <script src="../js/cart.js"></script>
+  </body>
+</html>

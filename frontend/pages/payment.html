@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Pembayaran – GreenSeed</title>
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <a href="/index.html" class="navbar-brand"
+        ><span class="logo">🌱</span> GreenSeed</a
+      >
+      <div class="navbar-right" id="nav-right"></div>
+    </nav>
+    <main class="page-wrap">
+      <h1 class="section-title">💳 Pembayaran</h1>
+      <div class="payment-layout">
+        <!-- Order summary -->
+        <div class="card">
+          <div class="card-header">
+            <h3 style="margin: 0">Ringkasan Pesanan</h3>
+          </div>
+          <div class="card-body">
+            <div class="summary-row">
+              <span>No. Pesanan</span><span id="order-id">–</span>
+            </div>
+            <div class="summary-row">
+              <span>Tanggal</span><span id="order-date">–</span>
+            </div>
+            <ul
+              id="order-items"
+              style="list-style: none; padding: 0; margin: 0.5rem 0"
+            ></ul>
+            <div class="summary-row total">
+              <span>Total</span><span id="order-total">–</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment instructions -->
+        <div class="card payment-card">
+          <div class="card-header">
+            <h3 style="margin: 0">Transfer Bank</h3>
+            <div class="countdown-wrap">
+              ⏱️ Waktu pembayaran:
+              <span id="countdown" class="countdown">15:00</span>
+            </div>
+          </div>
+          <div class="card-body">
+            <p class="text-muted" style="margin-bottom: 1rem">
+              Selesaikan pembayaran sebelum waktu habis.
+            </p>
+
+            <div class="bank-info">
+              <div class="bank-row">
+                <span>Bank</span>
+                <strong id="bank-name">–</strong>
+              </div>
+              <div class="bank-row">
+                <span>Atas Nama</span>
+                <strong id="bank-holder">–</strong>
+              </div>
+              <div class="bank-row">
+                <span>No. Rekening</span>
+                <div style="display: flex; align-items: center; gap: 0.5rem">
+                  <strong id="bank-no" class="bank-no">–</strong>
+                  <button class="btn btn-outline btn-sm" onclick="copyBankNo()">
+                    Salin
+                  </button>
+                </div>
+              </div>
+              <div class="bank-row">
+                <span>Nominal Transfer</span>
+                <div style="display: flex; align-items: center; gap: 0.5rem">
+                  <strong id="transfer-amount" class="bank-no">–</strong>
+                  <button class="btn btn-outline btn-sm" onclick="copyAmount()">
+                    Salin
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <p class="text-muted" style="font-size: 0.85rem; margin-top: 1rem">
+              ⚠️ Transfer tepat sesuai nominal untuk verifikasi otomatis.
+              Setelah transfer, klik tombol Bayar.
+            </p>
+
+            <div style="display: flex; gap: 0.8rem; margin-top: 1.5rem">
+              <button
+                id="pay-btn"
+                class="btn btn-success btn-lg"
+                style="flex: 1"
+                onclick="payOrder()"
+              >
+                ✅ Konfirmasi Bayar
+              </button>
+              <button
+                class="btn btn-lg"
+                style="background: #fed7d7; color: #c53030; flex: 0 0 auto"
+                onclick="cancelOrder()"
+              >
+                ❌ Batalkan
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <div id="toasts"></div>
+    <script src="../js/api.js"></script>
+    <script src="../js/payment.js"></script>
+  </body>
+</html>

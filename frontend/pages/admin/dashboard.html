@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Dashboard Admin – GreenSeed</title>
+    <link rel="stylesheet" href="../../css/style.css" />
+  </head>
+  <body class="admin-body">
+    <div class="admin-layout">
+      <!-- Sidebar -->
+      <aside class="admin-sidebar">
+        <div class="sidebar-brand">
+          <span class="logo">🌱</span> GreenSeed
+          <span style="font-size: 0.7rem; opacity: 0.8">Admin</span>
+        </div>
+        <nav class="sidebar-nav">
+          <a href="dashboard.html" class="sidebar-link active">📊 Dashboard</a>
+          <a href="products.html" class="sidebar-link">🌿 Produk</a>
+          <a href="orders.html" class="sidebar-link">📦 Pesanan</a>
+        </nav>
+        <div class="sidebar-footer">
+          <button
+            onclick="logout()"
+            class="btn btn-outline-white btn-sm w-full"
+          >
+            Keluar
+          </button>
+        </div>
+      </aside>
+
+      <!-- Content -->
+      <div class="admin-content">
+        <div class="admin-topbar">
+          <h2>Dashboard</h2>
+          <div id="nav-right" style="display: none"></div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon">📦</div>
+            <div class="stat-info">
+              <div class="value" id="stat-orders">–</div>
+              <div class="label">Total Pesanan</div>
+            </div>
+          </div>
+          <div class="stat-card blue">
+            <div class="stat-icon">💰</div>
+            <div class="stat-info">
+              <div class="value" id="stat-revenue" style="font-size: 1.1rem">
+                –
+              </div>
+              <div class="label">Total Pendapatan</div>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon">🌿</div>
+            <div class="stat-info">
+              <div class="value" id="stat-products">–</div>
+              <div class="label">Jumlah Produk</div>
+            </div>
+          </div>
+          <div class="stat-card orange">
+            <div class="stat-icon">👤</div>
+            <div class="stat-info">
+              <div class="value" id="stat-users">–</div>
+              <div class="label">Total Pengguna</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Orders -->
+        <div class="card mt-3">
+          <div class="card-header">
+            <h3 style="margin: 0">Pesanan Terbaru</h3>
+            <a href="orders.html" class="btn btn-outline btn-sm"
+              >Lihat Semua →</a
+            >
+          </div>
+          <div class="card-body">
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Tanggal</th>
+                    <th>Pelanggan</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="recent-tbody">
+                  <tr>
+                    <td colspan="5" class="text-center text-muted">
+                      Memuat...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="toasts"></div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/admin/dashboard.js"></script>
+  </body>
+</html>

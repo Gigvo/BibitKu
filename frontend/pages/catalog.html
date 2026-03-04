@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Katalog Bibit – GreenSeed</title>
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <a href="/index.html" class="navbar-brand"
+        ><span class="logo">🌱</span> GreenSeed</a
+      >
+      <div class="navbar-center">
+        <a href="catalog.html" class="nav-link active">🛍️ Katalog</a>
+      </div>
+      <div class="navbar-right" id="nav-right"></div>
+    </nav>
+    <main class="page-wrap">
+      <h1 class="section-title">🌿 Katalog Bibit</h1>
+
+      <!-- Search + Filter -->
+      <div class="catalog-toolbar">
+        <form id="search-form" class="search-form">
+          <input
+            id="search-input"
+            type="text"
+            class="form-control"
+            placeholder="Cari nama bibit..."
+          />
+          <button type="submit" class="btn btn-success">🔍 Cari</button>
+        </form>
+        <div class="jenis-filter">
+          <button class="btn btn-outline btn-sm" data-jenis="">Semua</button>
+          <button class="btn btn-outline btn-sm" data-jenis="Bunga">
+            🌸 Bunga
+          </button>
+          <button class="btn btn-outline btn-sm" data-jenis="Buah">
+            🍎 Buah
+          </button>
+          <button class="btn btn-outline btn-sm" data-jenis="Sayuran">
+            🥦 Sayuran
+          </button>
+          <button class="btn btn-outline btn-sm" data-jenis="Herbal">
+            🌿 Herbal
+          </button>
+          <button class="btn btn-outline btn-sm" data-jenis="Pohon">
+            🌳 Pohon
+          </button>
+        </div>
+      </div>
+
+      <div id="catalog-grid" class="product-grid">
+        <div class="loading">
+          <div class="spinner"></div>
+          Memuat produk...
+        </div>
+      </div>
+    </main>
+    <div id="toasts"></div>
+    <script src="../js/api.js"></script>
+    <script src="../js/catalog.js"></script>
+    <script>
+      renderNavAuth();
+      initSearchForm();
+      initJenisFilter();
+      loadCatalog();
+    </script>
+  </body>
+</html>

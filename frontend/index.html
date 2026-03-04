@@ -1,0 +1,124 @@
+﻿<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>GreenSeed â€“ Marketplace Bibit Tanaman</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <nav class="navbar">
+      <a href="index.html" class="navbar-brand"
+        ><span class="logo">ðŸŒ±</span> GreenSeed</a
+      >
+      <div class="navbar-center">
+        <a href="pages/catalog.html" class="nav-link">ðŸ›ï¸ Katalog</a>
+      </div>
+      <div class="navbar-right" id="nav-right">
+        <a href="pages/login.html" class="btn btn-outline-white btn-sm"
+          >Masuk</a
+        >
+        <a href="pages/register.html" class="btn btn-success btn-sm">Daftar</a>
+      </div>
+    </nav>
+    <main>
+      <section class="hero">
+        <h1>ðŸŒ¿ Temukan Bibit Impian Anda</h1>
+        <p>
+          Marketplace terpercaya untuk bibit tanaman berkualitas. Bunga, buah,
+          sayuran, hingga herbal â€” semuanya ada di GreenSeed.
+        </p>
+        <div class="hero-actions">
+          <a href="pages/catalog.html" class="btn btn-success btn-lg"
+            >ðŸ›ï¸ Belanja Sekarang</a
+          >
+          <a href="pages/register.html" class="btn btn-outline-white btn-lg"
+            >Daftar Gratis</a
+          >
+        </div>
+      </section>
+      <div class="page-wrap">
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.2rem;
+          "
+        >
+          <h2 class="section-title" style="margin-bottom: 0">
+            ðŸŒŸ Produk Unggulan
+          </h2>
+          <a href="pages/catalog.html" class="btn btn-outline btn-sm"
+            >Lihat Semua â†’</a
+          >
+        </div>
+        <div id="featured-grid" class="product-grid">
+          <div class="loading">
+            <div class="spinner"></div>
+            Memuat produk...
+          </div>
+        </div>
+        <div class="card mt-3">
+          <div class="card-body">
+            <h2 class="section-title">ðŸ—‚ï¸ Kategori</h2>
+            <div
+              style="
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+                gap: 0.8rem;
+              "
+            >
+              <a href="pages/catalog.html?jenis=Bunga" class="cat-btn"
+                >ðŸŒ¸ Bunga</a
+              >
+              <a href="pages/catalog.html?jenis=Buah" class="cat-btn"
+                >ðŸŽ Buah</a
+              >
+              <a href="pages/catalog.html?jenis=Sayuran" class="cat-btn"
+                >ðŸ¥¦ Sayuran</a
+              >
+              <a href="pages/catalog.html?jenis=Herbal" class="cat-btn"
+                >ðŸŒ¿ Herbal</a
+              >
+              <a href="pages/catalog.html?jenis=Pohon" class="cat-btn"
+                >ðŸŒ³ Pohon</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer>
+      <div class="fb">ðŸŒ± GreenSeed</div>
+      Marketplace Bibit Tanaman &copy; 2026
+    </footer>
+    <div id="toasts"></div>
+    <style>
+      .cat-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+        padding: 0.8rem;
+        background: var(--green-pale);
+        border-radius: var(--radius-sm);
+        font-weight: 600;
+        font-size: 0.88rem;
+        color: var(--green-dark);
+        transition: all var(--tr);
+        text-align: center;
+      }
+      .cat-btn:hover {
+        background: var(--green-acc);
+        transform: translateY(-2px);
+      }
+    </style>
+    <script src="js/api.js"></script>
+    <script src="js/catalog.js"></script>
+    <script>
+      renderNavAuth();
+      loadFeatured();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>Kelola Pesanan – GreenSeed Admin</title>
+    <link rel="stylesheet" href="../../css/style.css" />
+  </head>
+  <body class="admin-body">
+    <div class="admin-layout">
+      <aside class="admin-sidebar">
+        <div class="sidebar-brand">
+          <span class="logo">🌱</span> GreenSeed
+          <span style="font-size: 0.7rem; opacity: 0.8">Admin</span>
+        </div>
+        <nav class="sidebar-nav">
+          <a href="dashboard.html" class="sidebar-link">📊 Dashboard</a>
+          <a href="products.html" class="sidebar-link">🌿 Produk</a>
+          <a href="orders.html" class="sidebar-link active">📦 Pesanan</a>
+        </nav>
+        <div class="sidebar-footer">
+          <button
+            onclick="logout()"
+            class="btn btn-outline-white btn-sm w-full"
+          >
+            Keluar
+          </button>
+        </div>
+      </aside>
+
+      <div class="admin-content">
+        <div class="admin-topbar">
+          <h2>Kelola Pesanan</h2>
+          <div style="display: flex; align-items: center; gap: 0.8rem">
+            <label style="font-weight: 600; font-size: 0.9rem">Filter:</label>
+            <select
+              id="status-filter"
+              class="form-control"
+              style="width: 160px"
+            >
+              <option value="">Semua Status</option>
+              <option value="pending">Menunggu</option>
+              <option value="paid">Dibayar</option>
+              <option value="completed">Selesai</option>
+              <option value="cancelled">Dibatalkan</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-body">
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Tanggal</th>
+                    <th>Pelanggan</th>
+                    <th>Total</th>
+                    <th>Status</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+                <tbody id="orders-tbody">
+                  <tr>
+                    <td colspan="6" class="text-center text-muted">
+                      Memuat...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="toasts"></div>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/admin/orders.js"></script>
+  </body>
+</html>
