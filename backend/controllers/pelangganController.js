@@ -31,16 +31,16 @@ exports.getById = async (req, res) => {
 
 // POST /api/pelanggan
 exports.create = async (req, res) => {
-  const { nama_pelanggan, no_telepon, alamat } = req.body;
-  if (!nama_pelanggan || !no_telepon || !alamat)
+  const { nama_pelanggan, no_telepon } = req.body;
+  if (!nama_pelanggan || !no_telepon)
     return res
       .status(400)
-      .json({ success: false, message: "Semua field wajib diisi" });
+      .json({ success: false, message: "Nama pelanggan dan nomor telepon wajib diisi" });
 
   try {
     const [result] = await db.query(
-      "INSERT INTO pelanggan (nama_pelanggan, no_telepon, alamat) VALUES (?, ?, ?)",
-      [nama_pelanggan, no_telepon, alamat],
+      "INSERT INTO pelanggan (nama_pelanggan, no_telepon) VALUES (?, ?)",
+      [nama_pelanggan, no_telepon],
     );
     res.status(201).json({
       success: true,
@@ -49,7 +49,6 @@ exports.create = async (req, res) => {
         id_pelanggan: result.insertId,
         nama_pelanggan,
         no_telepon,
-        alamat,
       },
     });
   } catch (err) {
@@ -59,16 +58,16 @@ exports.create = async (req, res) => {
 
 // PUT /api/pelanggan/:id
 exports.update = async (req, res) => {
-  const { nama_pelanggan, no_telepon, alamat } = req.body;
-  if (!nama_pelanggan || !no_telepon || !alamat)
+  const { nama_pelanggan, no_telepon } = req.body;
+  if (!nama_pelanggan || !no_telepon)
     return res
       .status(400)
-      .json({ success: false, message: "Semua field wajib diisi" });
+      .json({ success: false, message: "Nama pelanggan dan nomor telepon wajib diisi" });
 
   try {
     const [result] = await db.query(
-      "UPDATE pelanggan SET nama_pelanggan=?, no_telepon=?, alamat=? WHERE id_pelanggan=?",
-      [nama_pelanggan, no_telepon, alamat, req.params.id],
+      "UPDATE pelanggan SET nama_pelanggan=?, no_telepon=? WHERE id_pelanggan=?",
+      [nama_pelanggan, no_telepon, req.params.id],
     );
     if (result.affectedRows === 0)
       return res

@@ -70,7 +70,7 @@ exports.create = async (req, res) => {
     const [cartItems] = await conn.query(
       `
       SELECT c.id AS cart_id, c.jumlah,
-             b.id AS bibit_id, b.nama_tanaman, b.harga, b.stok
+             b.id AS bibit_id, b.nama_tanaman, b.harga, b.stok, b.toko_id
       FROM cart c JOIN bibit_tanaman b ON c.bibit_id = b.id
       WHERE c.user_id = ?
     `,
@@ -90,36 +90,52 @@ exports.create = async (req, res) => {
         );
     }
 
-    const total_harga = cartItems.reduce(
-      (s, i) => s + parseFloat(i.harga) * i.jumlah,
-      0,
-    );
-
-    const [orderResult] = await conn.query(
-      "INSERT INTO orders (user_id, total_harga, status) VALUES (?, ?, ?)",
-      [req.user.id, total_harga, "pending"],
-    );
-    const orderId = orderResult.insertId;
-
+    // Group items by toko_id (multi-store checkout support)
+    const ordersByToko = {};
     for (const item of cartItems) {
-      await conn.query(
-        "INSERT INTO order_items (order_id, bibit_id, nama_tanaman, harga_satuan, jumlah) VALUES (?, ?, ?, ?, ?)",
-        [orderId, item.bibit_id, item.nama_tanaman, item.harga, item.jumlah],
+      if (!ordersByToko[item.toko_id]) {
+        ordersByToko[item.toko_id] = [];
+      }
+      ordersByToko[item.toko_id].push(item);
+    }
+
+    // Create separate orders for each toko
+    const createdOrders = [];
+    for (const tokoId in ordersByToko) {
+      const tokoItems = ordersByToko[tokoId];
+      const toko_total = tokoItems.reduce(
+        (s, i) => s + parseFloat(i.harga) * i.jumlah,
+        0,
       );
-      await conn.query(
-        "UPDATE bibit_tanaman SET stok = stok - ? WHERE id = ?",
-        [item.jumlah, item.bibit_id],
+
+      const [orderResult] = await conn.query(
+        "INSERT INTO orders (user_id, toko_id, total_harga, status) VALUES (?, ?, ?, ?)",
+        [req.user.id, tokoId, toko_total, "pending"],
       );
+      const orderId = orderResult.insertId;
+      createdOrders.push({ orderId, tokoId, total: toko_total });
+
+      for (const item of tokoItems) {
+        await conn.query(
+          "INSERT INTO order_items (order_id, bibit_id, nama_tanaman, harga_satuan, jumlah, subtotal) VALUES (?, ?, ?, ?, ?, ?)",
+          [orderId, item.bibit_id, item.nama_tanaman, item.harga, item.jumlah, parseFloat(item.harga) * item.jumlah],
+        );
+        await conn.query(
+          "UPDATE bibit_tanaman SET stok = stok - ? WHERE id = ?",
+          [item.jumlah, item.bibit_id],
+        );
+      }
     }
 
     await conn.query("DELETE FROM cart WHERE user_id = ?", [req.user.id]);
     await conn.commit();
 
+    const totalAmount = createdOrders.reduce((sum, order) => sum + order.total, 0);
     res.status(201).json({
       success: true,
-      message: "Order berhasil dibuat.",
-      orderId,
-      total_harga,
+      message: `${createdOrders.length} order${createdOrders.length > 1 ? 's' : ''} berhasil dibuat.`,
+      orders: createdOrders,
+      total_amount: totalAmount,
     });
   } catch (err) {
     await conn.rollback();

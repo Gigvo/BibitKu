@@ -3,6 +3,9 @@ const express = require("express");
 const cors = require("cors");
 const path = require("path");
 
+// Import database to test connection on startup
+const db = require("./config/database");
+
 const authRoutes = require("./routes/auth");
 const productRoutes = require("./routes/products");
 const cartRoutes = require("./routes/cart");
